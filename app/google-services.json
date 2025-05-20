@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "556424045550",
+    "project_id": "sensyas-d096f",
+    "storage_bucket": "sensyas-d096f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556424045550:android:8d8e38a6804cf916f664ff",
+        "android_client_info": {
+          "package_name": "com.example.senyas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCTXHA75OP7B_VJXTY4NM1XhG35zjMaRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
