@@ -1,5 +1,7 @@
 package com.example.senyas
 
+import android.content.Context
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,21 +28,48 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import coil.compose.AsyncImage
-import coil.decode.GifDecoder
-import coil.request.ImageRequest
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import androidx.media3.ui.AspectRatioFrameLayout
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 
 @Composable
 fun HomeScreen(
     onLogout: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
     onHistoryClick: () -> Unit = {},
-    onLearnFSLClick: () -> Unit = {} // ✅ comma added here
+    onLearnFSLClick: () -> Unit = {}
 ) {
     var inputText by remember { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    var videoToPlay by remember { mutableStateOf<String?>(null) }
+
+    val player = remember {
+        ExoPlayer.Builder(context).build().apply {
+            repeatMode = ExoPlayer.REPEAT_MODE_ALL
+            playWhenReady = true
+        }
+    }
+
+    LaunchedEffect(videoToPlay) {
+        videoToPlay?.let { file ->
+            val uri = Uri.parse("android.resource://${context.packageName}/raw/${file}")
+            player.setMediaItem(MediaItem.fromUri(uri))
+            player.prepare()
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { player.release() }
+    }
 
     Box(
         modifier = Modifier
@@ -85,7 +114,7 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Avatar box
+            // Avatar / Video box
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -95,15 +124,24 @@ fun HomeScreen(
                     .clipToBounds(),
                 contentAlignment = Alignment.Center
             ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data("android.resource://${LocalContext.current.packageName}/raw/sample")
-                        .decoderFactory(GifDecoder.Factory())
-                        .build(),
-                    contentDescription = "FSL Background",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxHeight()
-                )
+                if (videoToPlay != null) {
+                    AndroidView(
+                        factory = {
+                            PlayerView(it).apply {
+                                this.player = player
+                                resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
+                                useController = false
+                            }
+                        },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                } else {
+                    Text(
+                        "Your translated FSL will appear here.",
+                        color = Color.LightGray,
+                        fontSize = 14.sp
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -131,7 +169,12 @@ fun HomeScreen(
             Button(
                 onClick = {
                     scope.launch {
-                        snackbarHostState.showSnackbar("This feature is currently in development.")
+                        val matched = loadGlossFileAndMatch(inputText.trim().lowercase(), context)
+                        if (matched != null) {
+                            videoToPlay = matched
+                        } else {
+                            snackbarHostState.showSnackbar("No matching FSL translation found.")
+                        }
                     }
                 },
                 modifier = Modifier
@@ -206,5 +249,21 @@ fun HomeScreen(
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 24.dp)
         )
+    }
+}
+
+suspend fun loadGlossFileAndMatch(text: String, context: Context): String? = withContext(Dispatchers.IO) {
+    return@withContext try {
+        val jsonStr = context.assets.open("gloss_model.json").bufferedReader().use { it.readText() }
+        val jsonArray = JSONObject(jsonStr).getJSONArray("translations")
+        for (i in 0 until jsonArray.length()) {
+            val obj = jsonArray.getJSONObject(i)
+            if (obj.getString("input").lowercase() == text) {
+                return@withContext "fsl${obj.getString("gloss")}" // assumes raw file names are lowercase like: fslmagandang_gabi
+            }
+        }
+        null
+    } catch (e: Exception) {
+        null
     }
 }
