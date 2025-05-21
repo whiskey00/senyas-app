@@ -1,0 +1,19 @@
+{
+  "translations": [
+    {
+      "input": "magandang umaga",
+      "gloss": "magandang_umaga",
+      "description": "Pagbati sa umaga"
+    },
+    {
+      "input": "magandang hapon",
+      "gloss": "magandang_hapon",
+      "description": "Pagbati sa hapon"
+    },
+    {
+      "input": "magandang gabi",
+      "gloss": "magandang_gabi",
+      "description": "Pagbati sa gabi"
+    }
+  ]
+}
