@@ -24,6 +24,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
+import androidx.core.net.toUri
 
 data class FSLClip(val title: String, val rawFileName: String, val description: String)
 
@@ -147,36 +148,53 @@ fun LearnFSLScreen(onBack: () -> Unit = {}) {
 
             LearnFSLState.DETAIL -> {
                 selectedClip?.let { clip ->
-                    Text(
-                        text = selectedCategory,
-                        color = Color(0xFF60A5FA),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(bottom = 12.dp)
-                    )
-
-                    Card(
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(16.dp)),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B))
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Column {
+                        Text(
+                            text = selectedCategory,
+                            color = Color.White,
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(vertical = 16.dp)
+                        )
+
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(200.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B))
+                        ) {
                             VideoPlayer(clip = clip)
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(
-                                    text = clip.title,
-                                    color = Color.White,
-                                    fontSize = 22.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = clip.description,
-                                    color = Color(0xFF9CA3AF),
-                                    fontSize = 14.sp
-                                )
-                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        Text(
+                            text = clip.title,
+                            color = Color.White,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B))
+                        ) {
+                            Text(
+                                text = clip.description,
+                                color = Color(0xFF9CA3AF),
+                                fontSize = 14.sp,
+                                modifier = Modifier.padding(16.dp)
+                            )
                         }
                     }
                 }
@@ -186,12 +204,13 @@ fun LearnFSLScreen(onBack: () -> Unit = {}) {
 }
 
 
+
 @Composable
 fun VideoPlayer(clip: FSLClip) {
     val context = LocalContext.current
     val player = remember {
         ExoPlayer.Builder(context).build().apply {
-            val uri = Uri.parse("android.resource://${context.packageName}/raw/${clip.rawFileName}")
+            val uri = "android.resource://${context.packageName}/raw/${clip.rawFileName}".toUri()
             setMediaItem(MediaItem.fromUri(uri))
             prepare()
             playWhenReady = true
