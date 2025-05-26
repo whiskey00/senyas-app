@@ -23,6 +23,7 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.navArgument
 import com.example.senyas.HistoryScreen
 
 
@@ -74,18 +75,21 @@ fun AppNavigation() {
                     }
                 )
             }
-            composable("home") {
+            composable("home?playText={playText}", arguments = listOf(
+                navArgument("playText") { nullable = true }
+            )) { backStackEntry ->
+                val playText = backStackEntry.arguments?.getString("playText")
                 HomeScreen(
                     onSettingsClick = { navController.navigate("settings") },
                     onLogout = {
-                        navController.navigate("login") {
-                            popUpTo("home") { inclusive = true }
-                        }
+                        navController.navigate("login") { popUpTo("home") { inclusive = true } }
                     },
                     onHistoryClick = { navController.navigate("history") },
-                    onLearnFSLClick = { navController.navigate("learnFSL") }
+                    onLearnFSLClick = { navController.navigate("learnFSL") },
+                    playFromHistory = playText // Pass this to trigger playback
                 )
             }
+
             composable("settings") {
                 SettingsScreen(
                     onBack = { navController.popBackStack() },
@@ -98,7 +102,10 @@ fun AppNavigation() {
                 )
             }
             composable("history") {
-                HistoryScreen(onBack = { navController.popBackStack() })
+                HistoryScreen(
+                    onBack = { navController.popBackStack() },
+                    navController = navController
+                )
             }
 
             composable("learnFSL") {

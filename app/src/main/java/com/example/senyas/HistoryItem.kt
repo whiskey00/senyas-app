@@ -24,7 +24,13 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 
 @Composable
-fun HistoryItem(text: String, time: String) {
+fun HistoryItem(
+    text: String,
+    time: String,
+    onPlayClick: () -> Unit,
+    onDeleteClick: () -> Unit
+)
+ {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -50,10 +56,10 @@ fun HistoryItem(text: String, time: String) {
                 Text("FSL Translation Available", color = Color.LightGray, fontSize = 12.sp)
             }
             Row {
-                IconButton(onClick = { /* TODO: Play */ }) {
+                IconButton(onClick = onPlayClick) {
                     Icon(Icons.Default.PlayArrow, contentDescription = null, tint = Color(0xFF60A5FA))
                 }
-                IconButton(onClick = { /* TODO: Delete */ }) {
+                IconButton(onClick = onDeleteClick) {
                     Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red)
                 }
             }

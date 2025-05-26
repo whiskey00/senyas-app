@@ -20,10 +20,33 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import com.example.senyas.datastore.HistoryDataStore
+import com.example.senyas.model.TranslationHistoryItem
+import java.text.SimpleDateFormat
+import java.util.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import android.net.Uri
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.NavHostController
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun HistoryScreen(onBack: () -> Unit = {}) {
+fun HistoryScreen(onBack: () -> Unit = {}, navController: NavHostController) {
+    val context = LocalContext.current
+    var history by remember { mutableStateOf<List<TranslationHistoryItem>>(emptyList()) }
+    val scope = rememberCoroutineScope()
+
+
+    LaunchedEffect(Unit) {
+        history = HistoryDataStore.loadHistory(context)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -39,24 +62,32 @@ fun HistoryScreen(onBack: () -> Unit = {}) {
                 Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
             }
             Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                "Translation History",
-                color = Color.White,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Text("Translation History", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text("Today", color = Color.LightGray, fontSize = 14.sp)
-        HistoryItem("Kumusta ka na?", "2:30 PM")
-        HistoryItem("Maraming salamat po!", "11:45 AM")
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text("Yesterday", color = Color.LightGray, fontSize = 14.sp)
-        HistoryItem("Saan ang pinakamalapit na ospital?", "Mar 15, 4:20 PM")
+        if (history.isEmpty()) {
+            Text("No translation history yet.", color = Color.Gray)
+        } else {
+            history.forEach { item ->
+                val timeString = SimpleDateFormat("MMM dd, hh:mm a", Locale.getDefault()).format(Date(item.timestamp))
+                HistoryItem(
+                    text = item.text,
+                    time = timeString,
+                    onPlayClick = {
+                        navController.navigate("home?playText=${Uri.encode(item.text)}") {
+                            popUpTo("history") { inclusive = true }
+                        }
+                    },
+                    onDeleteClick = {
+                        scope.launch {
+                            HistoryDataStore.deleteHistoryByText(context, item.text)
+                            history = HistoryDataStore.loadHistory(context) // refresh list
+                        }
+                    }
+                )
+            }
+        }
     }
 }
-

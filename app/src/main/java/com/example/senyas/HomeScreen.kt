@@ -12,9 +12,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.Brightness3
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,6 +36,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import androidx.media3.ui.AspectRatioFrameLayout
+import com.example.senyas.datastore.HistoryDataStore
+import com.example.senyas.model.TranslationHistoryItem
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 
 @Composable
@@ -44,7 +45,8 @@ fun HomeScreen(
     onLogout: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
     onHistoryClick: () -> Unit = {},
-    onLearnFSLClick: () -> Unit = {}
+    onLearnFSLClick: () -> Unit = {},
+    playFromHistory: String? = null,
 ) {
     var inputText by remember { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -64,8 +66,22 @@ fun HomeScreen(
             val uri = Uri.parse("android.resource://${context.packageName}/raw/${file}")
             player.setMediaItem(MediaItem.fromUri(uri))
             player.prepare()
+            player.playWhenReady = true 
         }
     }
+
+    LaunchedEffect(Unit) {
+        if (!playFromHistory.isNullOrBlank()) {
+            val matched = loadGlossFileAndMatch(playFromHistory.lowercase(), context)
+            if (matched != null) {
+                videoToPlay = matched
+            } else {
+                snackbarHostState.showSnackbar("History: No matching FSL found.")
+            }
+        }
+    }
+
+
 
     DisposableEffect(Unit) {
         onDispose { player.release() }
@@ -104,7 +120,7 @@ fun HomeScreen(
 
                 Row {
                     IconButton(onClick = { /* TODO: Dark mode toggle */ }) {
-                        Icon(Icons.Default.Brightness3, contentDescription = null, tint = Color.White)
+                        Icon(Icons.Default.WbSunny, contentDescription = null, tint = Color.White)
                     }
                     IconButton(onClick = onSettingsClick) {
                         Icon(Icons.Default.Settings, contentDescription = null, tint = Color.White)
@@ -169,9 +185,20 @@ fun HomeScreen(
             Button(
                 onClick = {
                     scope.launch {
-                        val matched = loadGlossFileAndMatch(inputText.trim().lowercase(), context)
+                        val cleanedText = inputText.trim().lowercase()
+                        val matched = loadGlossFileAndMatch(cleanedText, context)
+
                         if (matched != null) {
                             videoToPlay = matched
+
+                            // Save to history
+                            HistoryDataStore.saveTranslation(
+                                context,
+                                TranslationHistoryItem(
+                                    text = cleanedText,
+                                    timestamp = System.currentTimeMillis()
+                                )
+                            )
                         } else {
                             snackbarHostState.showSnackbar("No matching FSL translation found.")
                         }
@@ -259,7 +286,7 @@ suspend fun loadGlossFileAndMatch(text: String, context: Context): String? = wit
         for (i in 0 until jsonArray.length()) {
             val obj = jsonArray.getJSONObject(i)
             if (obj.getString("input").lowercase() == text) {
-                return@withContext "fsl${obj.getString("gloss")}" // assumes raw file names are lowercase like: fslmagandang_gabi
+                return@withContext "fsl${obj.getString("gloss")}"
             }
         }
         null
