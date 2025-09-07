@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.example.senyas.ui.theme.SenyasTheme
 
 import com.google.firebase.ktx.Firebase
@@ -19,7 +18,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SenyasTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = Color(0xFF0F172A)) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = com.example.senyas.ui.theme.SenyasColors.Background
+                ) {
                     AppNavigation()
                 }
             }
