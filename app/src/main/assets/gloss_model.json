@@ -1,29 +1,64 @@
 {
   "translations": [
     {
-      "input": "magandang umaga",
-      "gloss": "magandang_umaga",
-      "description": "Pagbati sa umaga"
+      "input": "apat",
+      "gloss": "fsl_apat",
+      "description": "Bilang na apat"
     },
     {
-      "input": "magandang hapon",
-      "gloss": "magandang_hapon",
-      "description": "Pagbati sa hapon"
+      "input": "ayos lang",
+      "gloss": "fsl_ayos_lang",
+      "description": "Pagpapahayag na okay lang o walang problema"
+    },
+    {
+      "input": "dalawa",
+      "gloss": "fsl_dalawa",
+      "description": "Bilang na dalawa"
+    },
+    {
+      "input": "hindi ko alam",
+      "gloss": "fsl_hindi_ko_alam",
+      "description": "Pagpapahayag ng hindi pagkakaalam"
+    },
+    {
+      "input": "isa",
+      "gloss": "fsl_isa",
+      "description": "Bilang na isa"
+    },
+    {
+      "input": "lima",
+      "gloss": "fsl_lima",
+      "description": "Bilang na lima"
     },
     {
       "input": "magandang gabi",
-      "gloss": "magandang_gabi",
+      "gloss": "fsl_magandang_gabi",
       "description": "Pagbati sa gabi"
     },
     {
-      "input": "walang anuman",
-      "gloss": "walang_anuman",
-      "description": "Pormal o magalang na tugon sa 'salamat'"
+      "input": "magandang hapon",
+      "gloss": "fsl_magandang_hapon",
+      "description": "Pagbati sa hapon"
+    },
+    {
+      "input": "magandang umaga",
+      "gloss": "fsl_magandang_umaga",
+      "description": "Pagbati sa umaga"
     },
     {
       "input": "oo",
-      "gloss": "oo",
-      "description": "Ginagamit upang ipahayag ang pagsang-ayon o pagtanggap."
+      "gloss": "fsl_oo",
+      "description": "Ginagamit upang ipahayag ang pagsang-ayon o pagtanggap"
+    },
+    {
+      "input": "tatlo",
+      "gloss": "fsl_tatlo",
+      "description": "Bilang na tatlo"
+    },
+    {
+      "input": "walang anuman",
+      "gloss": "fsl_walang_anuman",
+      "description": "Pormal o magalang na tugon sa 'salamat'"
     }
   ]
 }
