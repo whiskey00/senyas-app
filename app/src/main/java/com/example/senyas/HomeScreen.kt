@@ -48,6 +48,8 @@ fun HomeScreen(
     onHistoryClick: () -> Unit = {},
     onSavedClick: () -> Unit = {},
     onLearnFSLClick: () -> Unit = {},
+    onRecognizeSignClick: () -> Unit = {},
+    onFslToTextClick: () -> Unit = {},
     playFromHistory: String? = null,
 ) {
     var inputText by remember { mutableStateOf("") }
@@ -337,6 +339,72 @@ fun HomeScreen(
                                 )
                             }
                         }
+                    }
+                }
+                
+                // Recognize Sign Button
+                Button(
+                    onClick = onRecognizeSignClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(44.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = SenyasColors.Surface,
+                        contentColor = SenyasColors.OnSurface
+                    ),
+                    border = androidx.compose.foundation.BorderStroke(
+                        1.dp, 
+                        SenyasColors.Border
+                    )
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.CameraAlt,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            "Recognize Sign",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // FSL → Text Button
+                Button(
+                    onClick = onFslToTextClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(44.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = SenyasColors.Primary,
+                        contentColor = SenyasColors.OnPrimary
+                    )
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.FactCheck,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            "FSL → Text",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
                 }
             }

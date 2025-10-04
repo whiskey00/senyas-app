@@ -80,6 +80,8 @@ fun AppNavigation() {
                     onHistoryClick = { navController.navigate("history") },
                     onSavedClick = { navController.navigate("saved") },
                     onLearnFSLClick = { navController.navigate("learnFSL") },
+                    onRecognizeSignClick = { navController.navigate("recognizeSign") },
+                    onFslToTextClick = { navController.navigate("gestureRecognizer") },
                     playFromHistory = playText // Pass this to trigger playback
                 )
             }
@@ -122,6 +124,11 @@ fun AppNavigation() {
             composable("learnFSL") {
                 LearnFSLScreen(onBack = { navController.popBackStack() })
             }
+
+
+            composable("gestureRecognizer") {
+                GestureRecognizerScreen(onBack = { navController.popBackStack() })
+            }
         }
     }
 }
@@ -152,5 +159,4 @@ fun LoadingScreen() {
         }
     }
 }
-
 
