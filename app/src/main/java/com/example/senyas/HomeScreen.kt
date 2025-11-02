@@ -18,7 +18,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,8 +47,6 @@ fun HomeScreen(
     onHistoryClick: () -> Unit = {},
     onSavedClick: () -> Unit = {},
     onLearnFSLClick: () -> Unit = {},
-    onRecognizeSignClick: () -> Unit = {},
-    onFslToTextClick: () -> Unit = {},
     playFromHistory: String? = null,
 ) {
     var inputText by remember { mutableStateOf("") }
@@ -57,15 +54,58 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     var videoToPlay by remember { mutableStateOf<String?>(null) }
+    var videoQueue by remember { mutableStateOf<List<String>>(emptyList()) }
+    var currentVideoIndex by remember { mutableStateOf(0) }
     var isLoading by remember { mutableStateOf(false) }
 
     val player = remember {
         ExoPlayer.Builder(context).build().apply {
-            repeatMode = ExoPlayer.REPEAT_MODE_ALL
+            repeatMode = ExoPlayer.REPEAT_MODE_ONE
             playWhenReady = true
         }
     }
+    
+    // Listen for video completion to play next video in queue
+    LaunchedEffect(player) {
+        player.addListener(object : androidx.media3.common.Player.Listener {
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                if (playbackState == androidx.media3.common.Player.STATE_ENDED) {
+                    if (videoQueue.isNotEmpty() && currentVideoIndex < videoQueue.size - 1) {
+                        currentVideoIndex++
+                    }
+                }
+            }
+        })
+    }
 
+
+    // Handle video queue playback
+    LaunchedEffect(videoQueue, currentVideoIndex) {
+        if (videoQueue.isNotEmpty() && currentVideoIndex < videoQueue.size) {
+            val currentVideo = videoQueue[currentVideoIndex]
+            try {
+                val resourceName = currentVideo.replace(".mp4", "").lowercase()
+                val resourceId = context.resources.getIdentifier(resourceName, "raw", context.packageName)
+                
+                if (resourceId != 0) {
+                    val uri = Uri.parse("android.resource://${context.packageName}/$resourceId")
+                    player.setMediaItem(MediaItem.fromUri(uri))
+                    player.prepare()
+                    player.playWhenReady = true
+                } else {
+                    scope.launch {
+                        notificationState.showError("Video resource missing: $resourceName")
+                    }
+                }
+            } catch (e: Exception) {
+                scope.launch {
+                    notificationState.showError("Error loading video: ${e.message}")
+                }
+            }
+        }
+    }
+
+    // Handle single video playback (legacy)
     LaunchedEffect(videoToPlay) {
         videoToPlay?.let { file ->
             try {
@@ -78,7 +118,6 @@ fun HomeScreen(
                     player.prepare()
                     player.playWhenReady = true
                 } else {
-                    // Show error message if resource not found
                     scope.launch {
                         notificationState.showError("Video file not found: $resourceName")
                     }
@@ -95,7 +134,7 @@ fun HomeScreen(
         if (!playFromHistory.isNullOrBlank()) {
             val matched = loadGlossFileAndMatch(playFromHistory.lowercase(), context)
             if (matched != null) {
-                videoToPlay = matched
+                videoToPlay = "${matched}.mp4"
             } else {
                 scope.launch {
                     notificationState.showError("History: No matching FSL found.")
@@ -169,6 +208,7 @@ fun HomeScreen(
                     }
                 }
 
+
                 // Video Display Area
                 Card(
                     modifier = Modifier
@@ -186,7 +226,7 @@ fun HomeScreen(
                         .clip(RoundedCornerShape(16.dp)),
                     contentAlignment = Alignment.Center
                 ) {
-                    if (videoToPlay != null) {
+                    if (videoToPlay != null || videoQueue.isNotEmpty()) {
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.TopCenter
@@ -198,13 +238,14 @@ fun HomeScreen(
                                         resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                                         useController = false
                                         // Shift video up to focus on upper body
-                                        translationY = -40f
-                                        scaleX = 1.2f
-                                        scaleY = 1.2f
+                                        translationY = -30f
+                                        scaleX = 1.4f
+                                        scaleY = 1.4f
                                     }
                                 },
                                 modifier = Modifier.fillMaxSize()
                             )
+                            
                         }
                     } else {
                         Column(
@@ -285,11 +326,25 @@ fun HomeScreen(
                         onClick = {
                             scope.launch {
                                 isLoading = true
-                                val cleanedText = inputText.trim().lowercase()
-                                val matched = loadGlossFileAndMatch(cleanedText, context)
-
-                                if (matched != null) {
-                                    videoToPlay = matched
+                                val cleanedText = inputText.trim()
+                                
+                                // Use new sentence translation function
+                                val (matchedVideos, unsupportedWords) = FslDictionary.translateSentenceToVideoList(cleanedText)
+                                
+                                
+                                if (matchedVideos.isNotEmpty()) {
+                                    if (matchedVideos.size == 1) {
+                                        // Single video - use legacy playback
+                                        videoToPlay = "${matchedVideos[0]}.mp4"
+                                        videoQueue = emptyList()
+                                        currentVideoIndex = 0
+                                    } else {
+                                        // Multiple videos - use queue playback
+                                        videoQueue = matchedVideos.map { "$it.mp4" }
+                                        currentVideoIndex = 0
+                                        videoToPlay = null
+                                    }
+                                    
                                     // Save to history
                                     HistoryDataStore.saveTranslation(
                                         context,
@@ -298,7 +353,12 @@ fun HomeScreen(
                                             timestamp = System.currentTimeMillis()
                                         )
                                     )
-                                    notificationState.showSuccess("Translation successful!")
+                                    
+                                    if (unsupportedWords.isNotEmpty()) {
+                                        notificationState.showInfo("Some words are not supported: ${unsupportedWords.joinToString(", ")}")
+                                    } else {
+                                        notificationState.showSuccess("Translation successful!")
+                                    }
                                 } else {
                                     notificationState.showError("No matching FSL translation found.")
                                 }
@@ -339,72 +399,6 @@ fun HomeScreen(
                                 )
                             }
                         }
-                    }
-                }
-                
-                // Recognize Sign Button
-                Button(
-                    onClick = onRecognizeSignClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(44.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = SenyasColors.Surface,
-                        contentColor = SenyasColors.OnSurface
-                    ),
-                    border = androidx.compose.foundation.BorderStroke(
-                        1.dp, 
-                        SenyasColors.Border
-                    )
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.CameraAlt,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                            "Recognize Sign",
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // FSL → Text Button
-                Button(
-                    onClick = onFslToTextClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(44.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = SenyasColors.Primary,
-                        contentColor = SenyasColors.OnPrimary
-                    )
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.FactCheck,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                            "FSL → Text",
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
                     }
                 }
             }
@@ -529,6 +523,7 @@ fun HomeScreen(
         )
     }
 }
+
 
 suspend fun loadGlossFileAndMatch(text: String, context: Context): String? = withContext(Dispatchers.IO) {
     return@withContext try {
