@@ -154,24 +154,6 @@ fun ProfileScreen(onBack: () -> Unit = {}) {
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    // User ID Row
-                    ProfileInfoRow(
-                        icon = Icons.Default.Key,
-                        label = "User ID",
-                        value = currentUser?.uid?.take(8) + "..." ?: "Not available"
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    // Email Verified Row
-                    ProfileInfoRow(
-                        icon = if (currentUser?.isEmailVerified == true) Icons.Default.Verified else Icons.Default.Warning,
-                        label = "Email Status",
-                        value = if (currentUser?.isEmailVerified == true) "Verified" else "Not verified"
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
                     // Last Sign In
                     ProfileInfoRow(
                         icon = Icons.Default.Schedule,

@@ -59,6 +59,546 @@
       "input": "walang anuman",
       "gloss": "fsl_walang_anuman",
       "description": "Pormal o magalang na tugon sa 'salamat'"
+    },
+    {
+      "input": "abo",
+      "gloss": "fsl_abo",
+      "description": "Kulay na abo"
+    },
+    {
+      "input": "abril",
+      "gloss": "fsl_abril",
+      "description": "Buwan ng Abril"
+    },
+    {
+      "input": "asul",
+      "gloss": "fsl_asul",
+      "description": "Kulay na asul"
+    },
+    {
+      "input": "berde",
+      "gloss": "fsl_berde",
+      "description": "Kulay na berde"
+    },
+    {
+      "input": "enero",
+      "gloss": "fsl_enero",
+      "description": "Buwan ng Enero"
+    },
+    {
+      "input": "hulyo",
+      "gloss": "fsl_hulyo",
+      "description": "Buwan ng Hulyo"
+    },
+    {
+      "input": "hunyo",
+      "gloss": "fsl_hunyo",
+      "description": "Buwan ng Hunyo"
+    },
+    {
+      "input": "kumusta",
+      "gloss": "fsl_kumusta",
+      "description": "Pagbati o tanong kung kumusta ang kalagayan"
+    },
+    {
+      "input": "kumusta ka",
+      "gloss": "fsl_kumusta_ka",
+      "description": "Tanong kung kumusta ang kalagayan ng isang tao"
+    },
+    {
+      "input": "ikinagagalak kitang makilala",
+      "gloss": "fsl_ikinagagalak_kitang_makilala",
+      "description": "Pagpapahayag ng kasiyahan sa pagkikilala"
+    },
+    {
+      "input": "salamat",
+      "gloss": "fsl_salamat",
+      "description": "Pagpapahayag ng pasasalamat"
+    },
+    {
+      "input": "magkita tayo bukas",
+      "gloss": "fsl_magkita_tayo_bukas",
+      "description": "Pagpapahayag ng pagtatagpo sa susunod na araw"
+    },
+    {
+      "input": "naiintindihan",
+      "gloss": "fsl_naiintindihan",
+      "description": "Pagpapahayag ng pagkakaunawa"
+    },
+    {
+      "input": "hindi naintindihan",
+      "gloss": "fsl_hindi_naintindihan",
+      "description": "Pagpapahayag ng hindi pagkakaunawa"
+    },
+    {
+      "input": "alam",
+      "gloss": "fsl_alam",
+      "description": "Pagpapahayag ng pagkakaalam"
+    },
+    {
+      "input": "hindi",
+      "gloss": "fsl_hindi",
+      "description": "Pagpapahayag ng pagtanggi o hindi pagsang-ayon"
+    },
+    {
+      "input": "mali",
+      "gloss": "fsl_mali",
+      "description": "Pagpapahayag na hindi tama o wasto"
+    },
+    {
+      "input": "tama",
+      "gloss": "fsl_tama",
+      "description": "Pagpapahayag na wasto o tama"
+    },
+    {
+      "input": "mabagal",
+      "gloss": "fsl_mabagal",
+      "description": "Pagpapahayag ng mabagal na bilis"
+    },
+    {
+      "input": "mabilis",
+      "gloss": "fsl_mabilis",
+      "description": "Pagpapahayag ng mabilis na bilis"
+    },
+    {
+      "input": "anim",
+      "gloss": "fsl_anim",
+      "description": "Bilang na anim"
+    },
+    {
+      "input": "pito",
+      "gloss": "fsl_pito",
+      "description": "Bilang na pito"
+    },
+    {
+      "input": "walo",
+      "gloss": "fsl_walo",
+      "description": "Bilang na walo"
+    },
+    {
+      "input": "siyam",
+      "gloss": "fsl_siyam",
+      "description": "Bilang na siyam"
+    },
+    {
+      "input": "sampu",
+      "gloss": "fsl_sampu",
+      "description": "Bilang na sampu"
+    },
+    {
+      "input": "anak na lalaki",
+      "gloss": "fsl_anak_na_lalaki",
+      "description": "Anak na lalaki"
+    },
+    {
+      "input": "anak na babae",
+      "gloss": "fsl_anak_na_babae",
+      "description": "Anak na babae"
+    },
+    {
+      "input": "lolo",
+      "gloss": "fsl_lolo",
+      "description": "Ama ng magulang"
+    },
+    {
+      "input": "lola",
+      "gloss": "fsl_lola",
+      "description": "Ina ng magulang"
+    },
+    {
+      "input": "tiyo",
+      "gloss": "fsl_tiyo",
+      "description": "Kapatid na lalaki ng magulang"
+    },
+    {
+      "input": "tiya",
+      "gloss": "fsl_tiya",
+      "description": "Kapatid na babae ng magulang"
+    },
+    {
+      "input": "pinsan",
+      "gloss": "fsl_pinsan",
+      "description": "Anak ng tiyo o tiya"
+    },
+    {
+      "input": "magulang",
+      "gloss": "fsl_magulang",
+      "description": "Ama at ina"
+    },
+    {
+      "input": "lalaki",
+      "gloss": "fsl_lalaki",
+      "description": "Taong lalaki"
+    },
+    {
+      "input": "babae",
+      "gloss": "fsl_babae",
+      "description": "Taong babae"
+    },
+    {
+      "input": "bingi",
+      "gloss": "fsl_bingi",
+      "description": "Taong hindi nakakarinig"
+    },
+    {
+      "input": "mahina ang pandinig",
+      "gloss": "fsl_mahina_ang_pandinig",
+      "description": "Taong may mahinang pandinig"
+    },
+    {
+      "input": "taong nasa wheelchair",
+      "gloss": "fsl_taong_nasa_wheelchair",
+      "description": "Taong gumagamit ng wheelchair"
+    },
+    {
+      "input": "bulag",
+      "gloss": "fsl_bulag",
+      "description": "Taong hindi nakakakita"
+    },
+    {
+      "input": "bingi-bulag",
+      "gloss": "fsl_bingi_bulag",
+      "description": "Taong hindi nakakarinig at hindi nakakakita"
+    },
+    {
+      "input": "kasal",
+      "gloss": "fsl_kasal",
+      "description": "Pagpapakasal o kasal"
+    },
+    {
+      "input": "tinapay",
+      "gloss": "fsl_tinapay",
+      "description": "Pagkain na tinapay"
+    },
+    {
+      "input": "itlog",
+      "gloss": "fsl_itlog",
+      "description": "Pagkain na itlog"
+    },
+    {
+      "input": "isda",
+      "gloss": "fsl_isda",
+      "description": "Pagkain na isda"
+    },
+    {
+      "input": "karne",
+      "gloss": "fsl_karne",
+      "description": "Pagkain na karne"
+    },
+    {
+      "input": "manok",
+      "gloss": "fsl_manok",
+      "description": "Pagkain na manok"
+    },
+    {
+      "input": "spaghetti",
+      "gloss": "fsl_spaghetti",
+      "description": "Pagkain na spaghetti"
+    },
+    {
+      "input": "kanin",
+      "gloss": "fsl_kanin",
+      "description": "Pagkain na kanin"
+    },
+    {
+      "input": "longganisa",
+      "gloss": "fsl_longganisa",
+      "description": "Pagkain na longganisa"
+    },
+    {
+      "input": "hipon",
+      "gloss": "fsl_hipon",
+      "description": "Pagkain na hipon"
+    },
+    {
+      "input": "alimango",
+      "gloss": "fsl_alimango",
+      "description": "Pagkain na alimango"
+    },
+    {
+      "input": "mainit",
+      "gloss": "fsl_mainit",
+      "description": "Temperatura na mainit"
+    },
+    {
+      "input": "malamig",
+      "gloss": "fsl_malamig",
+      "description": "Temperatura na malamig"
+    },
+    {
+      "input": "juice",
+      "gloss": "fsl_juice",
+      "description": "Inumin na juice"
+    },
+    {
+      "input": "gatas",
+      "gloss": "fsl_gatas",
+      "description": "Inumin na gatas"
+    },
+    {
+      "input": "kape",
+      "gloss": "fsl_kape",
+      "description": "Inumin na kape"
+    },
+    {
+      "input": "tsaa",
+      "gloss": "fsl_tsaa",
+      "description": "Inumin na tsaa"
+    },
+    {
+      "input": "serbesa",
+      "gloss": "fsl_serbesa",
+      "description": "Inumin na serbesa"
+    },
+    {
+      "input": "alak",
+      "gloss": "fsl_alak",
+      "description": "Inumin na alak"
+    },
+    {
+      "input": "asukal",
+      "gloss": "fsl_asukal",
+      "description": "Pampatamis na asukal"
+    },
+    {
+      "input": "walang asukal",
+      "gloss": "fsl_walang_asukal",
+      "description": "Walang asukal"
+    },
+    {
+      "input": "ayos lang ako",
+      "gloss": "fsl_ayos_lang_ako",
+      "description": "Pagpapahayag na okay lang ang kalagayan"
+    },
+    {
+      "input": "hindi alam",
+      "gloss": "fsl_hindi_alam",
+      "description": "Pagpapahayag ng hindi pagkakaalam"
+    },
+    {
+      "input": "pebrero",
+      "gloss": "fsl_pebrero",
+      "description": "Buwan ng Pebrero"
+    },
+    {
+      "input": "marso",
+      "gloss": "fsl_marso",
+      "description": "Buwan ng Marso"
+    },
+    {
+      "input": "mayo",
+      "gloss": "fsl_mayo",
+      "description": "Buwan ng Mayo"
+    },
+    {
+      "input": "agosto",
+      "gloss": "fsl_agosto",
+      "description": "Buwan ng Agosto"
+    },
+    {
+      "input": "setyembre",
+      "gloss": "fsl_setyembre",
+      "description": "Buwan ng Setyembre"
+    },
+    {
+      "input": "oktubre",
+      "gloss": "fsl_oktubre",
+      "description": "Buwan ng Oktubre"
+    },
+    {
+      "input": "nobyembre",
+      "gloss": "fsl_nobyembre",
+      "description": "Buwan ng Nobyembre"
+    },
+    {
+      "input": "disyembre",
+      "gloss": "fsl_disyembre",
+      "description": "Buwan ng Disyembre"
+    },
+    {
+      "input": "lunes",
+      "gloss": "fsl_lunes",
+      "description": "Araw ng Lunes"
+    },
+    {
+      "input": "martes",
+      "gloss": "fsl_martes",
+      "description": "Araw ng Martes"
+    },
+    {
+      "input": "miyerkules",
+      "gloss": "fsl_miyerkules",
+      "description": "Araw ng Miyerkules"
+    },
+    {
+      "input": "huwebes",
+      "gloss": "fsl_huwebes",
+      "description": "Araw ng Huwebes"
+    },
+    {
+      "input": "biyernes",
+      "gloss": "fsl_biyernes",
+      "description": "Araw ng Biyernes"
+    },
+    {
+      "input": "sabado",
+      "gloss": "fsl_sabado",
+      "description": "Araw ng Sabado"
+    },
+    {
+      "input": "linggo",
+      "gloss": "fsl_linggo",
+      "description": "Araw ng Linggo"
+    },
+    {
+      "input": "ngayon",
+      "gloss": "fsl_ngayon",
+      "description": "Sa kasalukuyang araw"
+    },
+    {
+      "input": "bukas",
+      "gloss": "fsl_bukas",
+      "description": "Sa susunod na araw"
+    },
+    {
+      "input": "kahapon",
+      "gloss": "fsl_kahapon",
+      "description": "Sa nakaraang araw"
+    },
+    {
+      "input": "ama",
+      "gloss": "fsl_ama",
+      "description": "Ama o tatay"
+    },
+    {
+      "input": "ina",
+      "gloss": "fsl_ina",
+      "description": "Ina o nanay"
+    },
+    {
+      "input": "pula",
+      "gloss": "fsl_pula",
+      "description": "Kulay na pula"
+    },
+    {
+      "input": "kayumanggi",
+      "gloss": "fsl_kayumanggi",
+      "description": "Kulay na kayumanggi"
+    },
+    {
+      "input": "itim",
+      "gloss": "fsl_itim",
+      "description": "Kulay na itim"
+    },
+    {
+      "input": "puti",
+      "gloss": "fsl_puti",
+      "description": "Kulay na puti"
+    },
+    {
+      "input": "dilaw",
+      "gloss": "fsl_dilaw",
+      "description": "Kulay na dilaw"
+    },
+    {
+      "input": "kahelya",
+      "gloss": "fsl_kahelya",
+      "description": "Kulay na kahelya"
+    },
+    {
+      "input": "rosa",
+      "gloss": "fsl_rosa",
+      "description": "Kulay na rosa"
+    },
+    {
+      "input": "ube lila",
+      "gloss": "fsl_ube_lila",
+      "description": "Kulay na ube o lila"
+    },
+    {
+      "input": "maliwanag",
+      "gloss": "fsl_maliwanag",
+      "description": "Maliwanag o maliwanag na ilaw"
+    },
+    {
+      "input": "madilim",
+      "gloss": "fsl_madilim",
+      "description": "Madilim o walang ilaw"
+    },
+    {
+      "input": "dalawa",
+      "gloss": "fsl_dalawa",
+      "description": "Bilang na dalawa"
+    },
+    {
+      "input": "hindi ko alam",
+      "gloss": "fsl_hindi_ko_alam",
+      "description": "Pagpapahayag ng hindi pagkakaalam"
+    },
+    {
+      "input": "hindi naiintindihan",
+      "gloss": "fsl_hindi_naiintindihan",
+      "description": "Pagpapahayag ng hindi pagkakaunawa"
+    },
+    {
+      "input": "ikinagagalak kitang makilala",
+      "gloss": "fsl_ikinagagalak_kitang_makilala",
+      "description": "Pagpapahayag ng kasiyahan sa pagkikilala"
+    },
+    {
+      "input": "magkita tayo bukas",
+      "gloss": "fsl_magkita_tayo_bukas",
+      "description": "Pagpapahayag ng pagtatagpo sa susunod na araw"
+    },
+    {
+      "input": "mahina ang pandinig",
+      "gloss": "fsl_mahina_ang_pandinig",
+      "description": "Taong may mahinang pandinig"
+    },
+    {
+      "input": "taong nasa wheelchair",
+      "gloss": "fsl_taong_nasa_wheelchair",
+      "description": "Taong gumagamit ng wheelchair"
+    },
+    {
+      "input": "ayos lang",
+      "gloss": "fsl_ayos_lang",
+      "description": "Pagpapahayag na okay lang o walang problema"
+    },
+    {
+      "input": "ayos lang ako",
+      "gloss": "fsl_ayos_lang_ako",
+      "description": "Pagpapahayag na okay lang ang kalagayan"
+    },
+    {
+      "input": "hindi alam",
+      "gloss": "fsl_hindi_alam",
+      "description": "Pagpapahayag ng hindi pagkakaalam"
+    },
+    {
+      "input": "lalaki",
+      "gloss": "fsl_lalaki",
+      "description": "Taong lalaki"
+    },
+    {
+      "input": "babae",
+      "gloss": "fsl_babae",
+      "description": "Taong babae"
+    },
+    {
+      "input": "kayumanggi",
+      "gloss": "fsl_kayumanggi",
+      "description": "Kulay na kayumanggi"
+    },
+    {
+      "input": "rosa",
+      "gloss": "fsl_rosa",
+      "description": "Kulay na rosa"
+    },
+    {
+      "input": "ube lila",
+      "gloss": "fsl_ube_lila",
+      "description": "Kulay na ube o lila"
     }
   ]
 }
